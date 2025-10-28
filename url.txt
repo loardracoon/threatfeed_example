@@ -1,1 +1,2 @@
 https://www.sophos.com/en-us/products/endpoint-antivirus/edr
+https://example.com/
