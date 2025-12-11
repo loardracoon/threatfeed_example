@@ -1,2 +1,3 @@
 https://www.sophos.com/en-us/products/endpoint-antivirus/edr
-http://example.com/
+http://example.com
+http://10.90.90.90
