@@ -13,9 +13,11 @@
         :root {
             --primary-color: #1976D2; /* Azul Material */
             --primary-dark: #1565C0;
+            --primary-light: #42a5f5;
             --background-color: #F5F5F5;
             --surface-color: #FFFFFF;
             --text-color: #333333;
+            --text-white: #FFFFFF;
             --shadow-1: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
             --shadow-2: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
         }
@@ -34,12 +36,16 @@
         /* AppBar (Cabeçalho) */
         header {
             background-color: var(--primary-color);
-            color: var(--surface-color);
-            padding: 16px 24px;
+            color: var(--text-white);
+            padding: 0 24px;
+            height: 64px;
             box-shadow: var(--shadow-1);
             position: sticky;
             top: 0;
             z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* Separa Titulo e Menu */
         }
 
         header h1 {
@@ -47,6 +53,70 @@
             font-size: 1.5rem;
             font-weight: 500;
             letter-spacing: 0.5px;
+        }
+
+        /* Menu Dropdown Styles */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            height: 100%;
+        }
+
+        /* Botão do Menu */
+        .dropbtn {
+            background-color: transparent;
+            color: white;
+            padding: 0 16px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            height: 64px; /* Mesma altura do header */
+            display: flex;
+            align-items: center;
+            text-transform: uppercase;
+            font-family: 'Roboto', sans-serif;
+            transition: background-color 0.3s;
+        }
+
+        .dropbtn:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .dropbtn .material-icons {
+            margin-left: 8px;
+            font-size: 20px;
+        }
+
+        /* Conteúdo do Dropdown (Links) */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: var(--surface-color);
+            min-width: 160px;
+            box-shadow: var(--shadow-2);
+            border-radius: 4px;
+            z-index: 1;
+            padding: 8px 0;
+        }
+
+        .dropdown-content a {
+            color: var(--text-color);
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+            transition: background-color 0.2s;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Mostrar o menu ao passar o mouse */
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
 
         /* Container Principal */
@@ -63,11 +133,10 @@
         .grid-container {
             display: grid;
             gap: 24px;
-            /* Lógica para min 1 e max 5 colunas */
             grid-template-columns: repeat(1, 1fr);
         }
 
-        /* Breakpoints para ajustar colunas conforme largura da tela */
+        /* Breakpoints */
         @media (min-width: 600px) {
             .grid-container { grid-template-columns: repeat(2, 1fr); }
         }
@@ -99,25 +168,22 @@
             box-shadow: var(--shadow-1);
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             cursor: pointer;
-            height: 140px; /* Altura fixa para uniformidade */
+            height: 140px;
             position: relative;
             overflow: hidden;
         }
 
-        /* Efeito de Hover (Elevação) */
         .card:hover {
             box-shadow: var(--shadow-2);
             transform: translateY(-4px);
         }
 
-        /* Ícone do Servidor */
         .card .material-icons {
             font-size: 48px;
             color: var(--primary-color);
             margin-bottom: 16px;
         }
 
-        /* Texto do POD */
         .card h2 {
             margin: 0;
             font-size: 1.25rem;
@@ -125,7 +191,6 @@
             color: #424242;
         }
 
-        /* Efeito visual de clique (Ripple simples via CSS active) */
         .card:active {
             background-color: #f0f0f0;
             transform: translateY(-1px);
@@ -137,6 +202,20 @@
 
     <header>
         <h1>Sophizo</h1>
+        
+        <nav>
+            <div class="dropdown">
+                <button class="dropbtn">
+                    Student Book 
+                    <span class="material-icons">arrow_drop_down</span>
+                </button>
+                <div class="dropdown-content">
+                    <a href="https://github.com/loardracoon/threatfeed_example/blob/main/firewall102_spanish.md" target="_blank">
+                        Spanish
+                    </a>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <main>
@@ -154,24 +233,22 @@
 
             for (let i = startPod; i <= endPod; i++) {
                 const podName = `POD-${i}`;
-                // Construção da URL conforme solicitado
                 const podUrl = `https://pod-${i}.sophizo.com.br`;
 
                 // Criação do Elemento Link (Wrapper)
                 const link = document.createElement('a');
                 link.href = podUrl;
                 link.className = 'card-link';
-                // Opcional: abrir em nova aba. Remova a linha abaixo se quiser na mesma aba.
                 link.target = '_blank'; 
 
                 // Criação do Card
                 const card = document.createElement('div');
                 card.className = 'card';
 
-                // Ícone de Servidor (DNS/Server icon)
+                // Ícone
                 const icon = document.createElement('span');
                 icon.className = 'material-icons';
-                icon.innerText = 'dns'; // 'dns' ou 'storage' são bons ícones para servidor
+                icon.innerText = 'dns'; 
 
                 // Texto do Pod
                 const title = document.createElement('h2');
