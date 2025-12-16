@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sophizo</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Reset básico e Variáveis de Cor Material Design */
+        :root {
+            --primary-color: #1976D2; /* Azul Material */
+            --primary-dark: #1565C0;
+            --background-color: #F5F5F5;
+            --surface-color: #FFFFFF;
+            --text-color: #333333;
+            --shadow-1: 0 2px 1px -1px rgba(0,0,0,0.2), 0 1px 1px 0 rgba(0,0,0,0.14), 0 1px 3px 0 rgba(0,0,0,0.12);
+            --shadow-2: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* AppBar (Cabeçalho) */
+        header {
+            background-color: var(--primary-color);
+            color: var(--surface-color);
+            padding: 16px 24px;
+            box-shadow: var(--shadow-1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Container Principal */
+        main {
+            padding: 24px;
+            flex: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Grid System Responsivo */
+        .grid-container {
+            display: grid;
+            gap: 24px;
+            /* Lógica para min 1 e max 5 colunas */
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        /* Breakpoints para ajustar colunas conforme largura da tela */
+        @media (min-width: 600px) {
+            .grid-container { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (min-width: 900px) {
+            .grid-container { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1200px) {
+            .grid-container { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (min-width: 1500px) {
+            .grid-container { grid-template-columns: repeat(5, 1fr); }
+        }
+
+        /* Card Styles */
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card {
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-1);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            height: 140px; /* Altura fixa para uniformidade */
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Efeito de Hover (Elevação) */
+        .card:hover {
+            box-shadow: var(--shadow-2);
+            transform: translateY(-4px);
+        }
+
+        /* Ícone do Servidor */
+        .card .material-icons {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+        }
+
+        /* Texto do POD */
+        .card h2 {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: #424242;
+        }
+
+        /* Efeito visual de clique (Ripple simples via CSS active) */
+        .card:active {
+            background-color: #f0f0f0;
+            transform: translateY(-1px);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sophizo</h1>
+    </header>
+
+    <main>
+        <div class="grid-container" id="pod-grid">
+            </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const gridContainer = document.getElementById('pod-grid');
+            
+            // Configuração do Range
+            const startPod = 1500;
+            const endPod = 1509;
+
+            for (let i = startPod; i <= endPod; i++) {
+                const podName = `POD-${i}`;
+                // Construção da URL conforme solicitado
+                const podUrl = `https://pod-${i}.sophizo.com.br`;
+
+                // Criação do Elemento Link (Wrapper)
+                const link = document.createElement('a');
+                link.href = podUrl;
+                link.className = 'card-link';
+                // Opcional: abrir em nova aba. Remova a linha abaixo se quiser na mesma aba.
+                link.target = '_blank'; 
+
+                // Criação do Card
+                const card = document.createElement('div');
+                card.className = 'card';
+
+                // Ícone de Servidor (DNS/Server icon)
+                const icon = document.createElement('span');
+                icon.className = 'material-icons';
+                icon.innerText = 'dns'; // 'dns' ou 'storage' são bons ícones para servidor
+
+                // Texto do Pod
+                const title = document.createElement('h2');
+                title.innerText = podName;
+
+                // Montagem
+                card.appendChild(icon);
+                card.appendChild(title);
+                link.appendChild(card);
+                gridContainer.appendChild(link);
+            }
+        });
+    </script>
+
+</body>
+</html>
