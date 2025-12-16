@@ -1,4 +1,4 @@
-https://www.sophos.com/en-us/products/endpoint-antivirus/edr
+https://www.sophos.com/en-us/products/endpoint-security/edr
 https://example.com
 http://example.com
 http://10.90.90.90
